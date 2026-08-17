@@ -28,7 +28,6 @@ import imageRoutes           from './routes/images.js';
 import teamRoutes            from './routes/team.js';
 import contactRequestRoutes  from './routes/contactRequests.js';
 import resumeRoutes          from './routes/resumes.js';
-import { seedCandidatesFromWorkbook } from './scripts/seedCandidatesFromWorkbook.js';
 
 const app  = express();
 const PORT = globalThis.process?.env?.PORT || 4000;
@@ -100,22 +99,12 @@ app.use((err, req, res) => {
 });
 
 // ── Connect to MongoDB then start ─────────────────────────────────────────────
+// Note: candidate seeding is intentionally NOT run on startup.
+// Data is already seeded. To re-seed run: npm run seed:candidates
 mongoose
   .connect(globalThis.process?.env?.MONGODB_URI)
-  .then(async () => {
+  .then(() => {
     console.log('[db] Connected to MongoDB Atlas');
-    if (globalThis.process?.env?.AUTO_SEED_CANDIDATES !== 'false') {
-      try {
-        const result = await seedCandidatesFromWorkbook();
-        if (result.skipped) {
-          console.log('[seed] Candidate collection already contains data; skipping workbook seed.');
-        } else {
-          console.log(`[seed] Seeded ${result.inserted} workbook candidates.`);
-        }
-      } catch (err) {
-        console.error('[seed] Candidate workbook seed failed:', err.message);
-      }
-    }
     app.listen(PORT, () => console.log(`[server] Running on port ${PORT}`));
   })
   .catch((err) => {
