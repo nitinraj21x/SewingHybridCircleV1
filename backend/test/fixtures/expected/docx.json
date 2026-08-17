@@ -1,0 +1,9 @@
+{
+  "status": "complete",
+  "name": "Priya Sharma",
+  "location": "Thiruvananthapuram",
+  "currentRole": "Frontend Engineer",
+  "currentCompany": "Skyline Apps",
+  "skills": ["React", "TypeScript", "Node.js", "Figma", "Jira"],
+  "educationYear": "2020"
+}

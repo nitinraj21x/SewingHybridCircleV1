@@ -1,0 +1,38 @@
+Jane Kumar
+Senior Software Engineer
+jane.kumar@example.com | +91 98765 43210 | Bengaluru, Karnataka
+linkedin.com/in/janekumar | github.com/janekumar | janekumar.dev
+
+Professional Summary
+Product-focused frontend engineer with 6+ years building React and Node.js products.
+
+Experience
+Nimbus Labs, Bengaluru
+Senior Software Engineer
+Jan 2022 - Present
+- Built ReactJS dashboards and Node.js APIs for analytics workflows.
+- Reduced deployment time by 40% using Docker and AWS.
+
+Orbit Systems, Bangalore
+Software Engineer
+Jun 2018 - Dec 2021
+- Developed TypeScript frontend features for a B2B SaaS portal.
+
+Education
+Bachelor of Technology in Computer Science
+National Institute of Technology, Calicut
+2014 - 2018
+CGPA 8.4/10
+
+Skills
+ReactJS, Node.js, TypeScript, PostgreSQL, Docker, AWS, GraphQL, Jest
+
+Projects
+InsightBoard
+A reporting dashboard built with React and GraphQL.
+
+Certifications
+AWS Certified Developer – Associate, Amazon Web Services, 2023
+
+Languages
+English, Hindi

@@ -1,0 +1,59 @@
+services:
+  # ── Backend API ─────────────────────────────────────────────────────────────
+  - type: web
+    name: sewing-circle-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: MONGODB_URI
+        sync: false          # set manually in Render dashboard
+      - key: JWT_SECRET
+        generateValue: true  # Render auto-generates a secure value
+      - key: JWT_EXPIRES_IN
+        value: 8h
+      - key: FRONTEND_ORIGIN
+        sync: false          # set after frontend deploys — your Render static site URL
+      - key: CLOUDINARY_CLOUD_NAME
+        value: abvjgsog
+      - key: CLOUDINARY_API_KEY
+        sync: false          # set manually
+      - key: CLOUDINARY_API_SECRET
+        sync: false          # set manually
+
+  # ── Frontend Static Site ─────────────────────────────────────────────────────
+  - type: web
+    name: sewing-circle-frontend
+    runtime: static
+    rootDir: .
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_CLOUDINARY_CLOUD_NAME
+        value: abvjgsog
+      - key: VITE_API_BASE_URL
+        sync: false
+      - key: VITE_EMAILJS_PUBLIC_KEY
+        sync: false
+      - key: VITE_EMAILJS_SERVICE_ID
+        sync: false
+      - key: VITE_EMAILJS_TEMPLATE_ID
+        sync: false
+      - key: VITE_EMAILJS_REGISTRATION_TEMPLATE_ID
+        sync: false
+    headers:
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

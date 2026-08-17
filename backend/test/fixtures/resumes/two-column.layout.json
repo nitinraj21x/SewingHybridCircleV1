@@ -1,0 +1,31 @@
+{
+  "name": "Arun Iyer",
+  "headline": "Senior Full Stack Developer",
+  "location": "Bangalore",
+  "pages": [
+    {
+      "width": 612,
+      "height": 792,
+      "lines": [
+        { "x": 50, "y": 740, "text": "Arun Iyer" },
+        { "x": 50, "y": 720, "text": "Senior Full Stack Developer" },
+        { "x": 50, "y": 700, "text": "arun.iyer@example.com | +91 88888 77777 | Bangalore" },
+        { "x": 50, "y": 680, "text": "linkedin.com/in/aruniyer" },
+        { "x": 50, "y": 620, "text": "Skills" },
+        { "x": 50, "y": 600, "text": "React, Node.js, PostgreSQL, Docker, AWS" },
+        { "x": 50, "y": 560, "text": "Projects" },
+        { "x": 50, "y": 540, "text": "Realtime Dashboard" },
+        { "x": 50, "y": 520, "text": "An analytics app built with React and GraphQL." },
+        { "x": 330, "y": 660, "text": "Experience" },
+        { "x": 330, "y": 640, "text": "Pulse Tech, Bengaluru" },
+        { "x": 330, "y": 620, "text": "Senior Full Stack Developer" },
+        { "x": 330, "y": 600, "text": "2022 - Present" },
+        { "x": 330, "y": 580, "text": "- Led ReactJS migration and API consolidation." },
+        { "x": 330, "y": 540, "text": "Education" },
+        { "x": 330, "y": 520, "text": "B.E. in Computer Science" },
+        { "x": 330, "y": 500, "text": "IIT Madras, Chennai" },
+        { "x": 330, "y": 480, "text": "2016 - 2020" }
+      ]
+    }
+  ]
+}

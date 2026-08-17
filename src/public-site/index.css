@@ -1,0 +1,9 @@
+/*
+ * Public-site CSS entry point (imported by src/public-site/App.jsx).
+ *
+ * base.css   — Global :root CSS variables and @keyframes (truly global, no scope needed).
+ * styles.css — ALL rules are scoped under .ps-root so they never bleed into the portal.
+ *              The .ps-root class is applied to the outermost div in App.jsx.
+ */
+@import './base.css';
+@import './styles.css';

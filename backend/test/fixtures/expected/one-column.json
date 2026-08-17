@@ -1,0 +1,9 @@
+{
+  "status": "complete",
+  "name": "Jane Kumar",
+  "location": "Bengaluru",
+  "currentRole": "Senior Software Engineer",
+  "currentCompany": "Nimbus Labs",
+  "skills": ["React", "Node.js", "TypeScript", "PostgreSQL", "Docker", "AWS", "GraphQL", "Jest"],
+  "educationYear": "2018"
+}

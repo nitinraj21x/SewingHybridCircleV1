@@ -1,0 +1,9 @@
+{
+  "status": "partial",
+  "name": "Arun Iyer",
+  "location": "Bengaluru",
+  "currentRole": "Senior Full Stack Developer",
+  "currentCompany": "Pulse Tech",
+  "skills": ["React", "Node.js", "PostgreSQL", "Docker", "AWS"],
+  "warningsContains": "Two-column layout detected"
+}

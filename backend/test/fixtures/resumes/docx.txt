@@ -1,0 +1,22 @@
+Priya Sharma
+Frontend Engineer
+priya.sharma@example.com | +91 90000 11111 | Trivandrum
+linkedin.com/in/priyasharma | github.com/priyasharma
+
+Summary
+Frontend engineer who ships accessible user interfaces.
+
+Experience
+Skyline Apps
+Frontend Engineer
+2020 - Present
+- Built React and TypeScript experiences.
+
+Education
+Master of Computer Applications
+University of Kerala, Thiruvananthapuram
+2017 - 2020
+CGPA 8.9
+
+Skills
+React, ReactJS, TypeScript, Node.js, Figma, Jira

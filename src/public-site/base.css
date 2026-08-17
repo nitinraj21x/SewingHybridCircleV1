@@ -1,0 +1,216 @@
+/* ─── Global CSS Variables (never scoped — must be global) ─── */
+:root {
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+  
+  --color-cyan-300: #67e8f9;
+  --color-cyan-400: #22d3ee;
+  --color-cyan-500: #06b6d4;
+  --color-cyan-900: #164e63;
+  
+  --color-purple-300: #d8b4fe;
+  --color-purple-400: #c084fc;
+  --color-purple-500: #a855f7;
+  --color-purple-600: #9333ea;
+  --color-purple-900: #581c87;
+  
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  
+  --color-yellow-400: #facc15;
+  --color-yellow-500: #eab308;
+  
+  --color-green-400: #4ade80;
+  --color-green-500: #22c55e;
+  
+  --color-pink-600: #db2777;
+  --color-orange-600: #ea580c;
+  --color-emerald-600: #059669;
+  --color-indigo-600: #4f46e5;
+  
+  --color-red-500: #ef4444;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* Responsive Font Size Variables */
+  /* Base font size scales with viewport width and height */
+  --font-base: clamp(0.875rem, 2vw + 0.5rem, 1.125rem);
+  
+  /* Navigation fonts */
+  --font-nav-brand: clamp(1.125rem, 3vw + 0.75rem, 1.75rem);
+  --font-nav-link: clamp(0.75rem, 1.5vw + 0.5rem, 1rem);
+  --font-nav-cta: clamp(0.625rem, 1.2vw + 0.4rem, 0.875rem);
+  --font-mobile-menu: clamp(1rem, 2.5vw + 0.5rem, 1.25rem);
+  
+  /* Section titles and content */
+  --font-section-title: clamp(1.5rem, 5vw + 1rem, 4.5rem);
+  --font-section-subtitle: clamp(0.875rem, 2.2vw + 0.6rem, 1.375rem);
+  
+  /* Card content */
+  --font-card-title: clamp(0.875rem, 2vw + 0.5rem, 1.375rem);
+  --font-card-description: clamp(0.75rem, 1.5vw + 0.4rem, 1rem);
+  
+  /* About section */
+  --font-about-text: clamp(0.875rem, 1.8vw + 0.5rem, 1.125rem);
+  --font-about-tag: clamp(0.75rem, 1.5vw + 0.4rem, 1rem);
+  
+  /* Community section */
+  --font-community-title: clamp(1.125rem, 2.5vw + 0.6rem, 1.5rem);
+  --font-community-description: clamp(0.8rem, 1.6vw + 0.5rem, 1.05rem);
+  
+  /* Events section */
+  --font-events-title: clamp(1.25rem, 3vw + 0.75rem, 2.25rem);
+  --font-events-subtitle: clamp(0.875rem, 1.8vw + 0.5rem, 1.125rem);
+  --font-event-title: clamp(1.125rem, 2.5vw + 0.6rem, 1.75rem);
+  --font-event-meta: clamp(0.75rem, 1.5vw + 0.4rem, 1rem);
+  --font-event-description: clamp(0.875rem, 1.8vw + 0.5rem, 1.05rem);
+  --font-event-button: clamp(0.75rem, 1.5vw + 0.4rem, 1rem);
+  
+  /* Vision section */
+  --font-vision-stat-number: clamp(1.75rem, 4vw + 1rem, 2.75rem);
+  --font-vision-stat-label: clamp(0.75rem, 1.5vw + 0.4rem, 1rem);
+  
+  /* Additional responsive font sizes for various elements */
+  --font-button: clamp(0.75rem, 1.5vw + 0.4rem, 1rem);
+  --font-form-label: clamp(0.625rem, 1.2vw + 0.4rem, 0.875rem);
+  --font-form-error: clamp(0.625rem, 1.2vw + 0.4rem, 0.875rem);
+  --font-notification: clamp(0.75rem, 1.5vw + 0.4rem, 1rem);
+  --font-modal-title: clamp(1.25rem, 2.5vw + 0.75rem, 1.75rem);
+  --font-footer: clamp(0.75rem, 1.5vw + 0.4rem, 1rem);
+  --font-copyright: clamp(0.625rem, 1.2vw + 0.4rem, 0.875rem);
+}
+
+/* ─── Global Keyframes (animation names are inherently global) ─── */
+@keyframes slide-in-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes fade-in-up {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes logo-exit-up {
+  from { transform: translateY(0);     opacity: 1; }
+  to   { transform: translateY(-200%); opacity: 0; }
+}
+@keyframes logo-return-down {
+  from { transform: translateY(-200%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+@keyframes logo-roll-in {
+  0%   { transform: translate(-110%, -50%) rotate(-360deg); opacity: 0; }
+  100% { transform: translate(-50%,  -50%) rotate(0deg);    opacity: 1; }
+}
+@keyframes logo-roll-out {
+  0%   { transform: translate(-50%,  -50%) rotate(0deg);    opacity: 1; }
+  100% { transform: translate(-110%, -50%) rotate(-360deg); opacity: 0; }
+}
+@keyframes heading-gradient {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-25%);
+  }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes logoGlow {
+  0% {
+    opacity: 0.1;
+    box-shadow: 0 0 3px #ffd700,
+                0 0 6px #ffd700,
+                0 0 9px #ffd700,
+                0 0 12px #ffb347;
+  }
+  50% {
+    opacity: 0.75;
+    box-shadow: 0 0 6px #ffd700,
+                0 0 12px #ffd700,
+                0 0 18px #ffd700,
+                0 0 24px #ffb347,
+                0 0 30px #ff8c00;
+    transform: translate(300%, -350%);
+  }
+  100% {
+    opacity: 0.1;
+    box-shadow: 0 0 3px #ffd700,
+                0 0 6px #ffd700,
+                0 0 9px #ffd700,
+                0 0 12px #ffb347;
+  }
+}
+@keyframes lp-fade-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes lp-logo-pop {
+  0%   { opacity: 0; transform: scale(0.6); }
+  60%  { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes lp-ring-pulse {
+  0%   { transform: scale(0.85); opacity: 0.6; }
+  70%  { transform: scale(1.5);  opacity: 0; }
+  100% { transform: scale(1.5);  opacity: 0; }
+}
+@keyframes lp-text-fill {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+@keyframes lp-page-exit {
+  from { opacity: 1; }
+  to   { opacity: 0; pointer-events: none; }
+}
+@keyframes lp-logo-exit-top {
+  0%   { transform: translateY(0)     scale(1);    opacity: 1; }
+  100% { transform: translateY(-160%) scale(0.75); opacity: 0; }
+}
+@keyframes logo-intro-drop {
+  0%   { transform: translateY(-300%); opacity: 0; }
+  55%  { transform: translateY(12%);   opacity: 1; }   /* overshoot */
+  75%  { transform: translateY(-6%);   opacity: 1; }   /* bob up */
+  90%  { transform: translateY(4%);    opacity: 1; }   /* settle down */
+  100% { transform: translateY(0);     opacity: 1; }
+}
