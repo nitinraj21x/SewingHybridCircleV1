@@ -1,4 +1,4 @@
-/* eslint-disable no-useless-escape, no-unused-vars, no-useless-assignment */
+﻿/* eslint-disable no-useless-escape, no-unused-vars, no-useless-assignment */
 import * as pdfjsLib from 'pdfjs-dist';
 
 // Point the worker at the bundled worker file
@@ -14,7 +14,7 @@ function getAuthHeader() {
   return t ? { Authorization: `Bearer ${t}` } : {};
 }
 
-// ─── Skill keyword list ────────────────────────────────────────────────────────
+// â”€â”€â”€ Skill keyword list â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const SKILL_KEYWORDS = [
   'React', 'Next.js', 'Vue', 'Angular', 'TypeScript', 'JavaScript', 'Redux',
   'Tailwind CSS', 'CSS', 'HTML', 'GraphQL', 'REST API',
@@ -28,7 +28,7 @@ const SKILL_KEYWORDS = [
   'Git', 'Linux', 'Ansible', 'Helm', 'Figma', 'Jira', 'Agile', 'Scrum',
 ];
 
-// ─── Extract raw text from a PDF file ─────────────────────────────────────────
+// â”€â”€â”€ Extract raw text from a PDF file â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function extractPdfText(file) {
   const arrayBuffer = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
@@ -57,9 +57,9 @@ async function extractPdfText(file) {
   return pages.join('\n');
 }
 
-// ─── Name extraction ──────────────────────────────────────────────────────────
+// â”€â”€â”€ Name extraction â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // Strategy: the candidate's name is almost always in the first few non-empty
-// lines of a resume, as a short line of 2–4 capitalized words with no digits,
+// lines of a resume, as a short line of 2â€“4 capitalized words with no digits,
 // no email/phone patterns, and no common section headers.
 const SECTION_HEADERS = /^(summary|objective|experience|education|skills|projects|certifications|contact|profile|about|work history|employment|references|languages|interests|awards|publications|volunteer)/i;
 const NOISE_PATTERNS  = /[@\d\|\/\\#\(\)\[\]<>]/;
@@ -90,13 +90,13 @@ function extractName(lines) {
   return { firstName: '', lastName: '', fullLine: '' };
 }
 
-// ─── Email extraction ─────────────────────────────────────────────────────────
+// â”€â”€â”€ Email extraction â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function extractEmail(text) {
   const match = text.match(/[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}/);
   return match ? match[0] : '';
 }
 
-// ─── Phone extraction ─────────────────────────────────────────────────────────
+// â”€â”€â”€ Phone extraction â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function extractPhone(text) {
   const match = text.match(
     /(\+?\d{1,3}[\s\-.]?)?\(?\d{3}\)?[\s\-.]?\d{3}[\s\-.]?\d{4}/
@@ -105,22 +105,100 @@ function extractPhone(text) {
 }
 
 // ─── Location extraction ──────────────────────────────────────────────────────
-const CITY_STATE_RE = /\b([A-Z][a-zA-Z\s]+),\s*([A-Z]{2})\b/;
+
+// Known Indian cities and their canonical names
+const INDIAN_CITIES = new Map([
+  ['bangalore', 'Bengaluru'], ['bangaluru', 'Bengaluru'], ['bengaluru', 'Bengaluru'],
+  ['mumbai', 'Mumbai'], ['bombay', 'Mumbai'],
+  ['pune', 'Pune'], ['hyderabad', 'Hyderabad'], ['chennai', 'Chennai'], ['madras', 'Chennai'],
+  ['kochi', 'Kochi'], ['cochin', 'Kochi'],
+  ['delhi', 'Delhi'], ['new delhi', 'New Delhi'], ['delhi ncr', 'Delhi NCR'],
+  ['kolkata', 'Kolkata'], ['calcutta', 'Kolkata'],
+  ['ahmedabad', 'Ahmedabad'], ['surat', 'Surat'], ['jaipur', 'Jaipur'],
+  ['lucknow', 'Lucknow'], ['chandigarh', 'Chandigarh'], ['noida', 'Noida'],
+  ['gurgaon', 'Gurgaon'], ['gurugram', 'Gurugram'], ['coimbatore', 'Coimbatore'],
+  ['nagpur', 'Nagpur'], ['indore', 'Indore'], ['bhopal', 'Bhopal'],
+  ['thiruvananthapuram', 'Thiruvananthapuram'], ['trivandrum', 'Thiruvananthapuram'],
+]);
+
+// Accepted country/state names (second segment after comma)
+const VALID_SECOND_SEGMENTS = new Set([
+  'india', 'usa', 'united states', 'uk', 'united kingdom', 'canada', 'australia',
+  'singapore', 'uae', 'remote',
+  // US state abbreviations
+  'al','ak','az','ar','ca','co','ct','de','fl','ga','hi','id','il','in','ia','ks',
+  'ky','la','me','md','ma','mi','mn','ms','mo','mt','ne','nv','nh','nj','nm','ny',
+  'nc','nd','oh','ok','or','pa','ri','sc','sd','tn','tx','ut','vt','va','wa','wv',
+  'wi','wy','dc',
+  // US states (full names)
+  'florida','california','texas','new york','illinois','georgia','washington','ohio',
+  'pennsylvania','michigan','new jersey','north carolina','virginia','massachusetts',
+  'arizona','indiana','tennessee','missouri','maryland','wisconsin','minnesota',
+  'colorado','alabama','south carolina','louisiana','kentucky','oregon',
+  // Indian states
+  'maharashtra','karnataka','tamil nadu','telangana','kerala','andhra pradesh',
+  'uttar pradesh','west bengal','rajasthan','gujarat','madhya pradesh','haryana',
+  'punjab','bihar','odisha','jharkhand','uttarakhand','himachal pradesh',
+  'goa','assam','delhi','chandigarh',
+]);
+
+function isValidLocationSegment(segment) {
+  if (!segment) return false;
+  return VALID_SECOND_SEGMENTS.has(segment.toLowerCase().trim());
+}
+
 function extractLocation(text) {
-  const match = text.match(CITY_STATE_RE);
-  return match ? match[0] : '';
+  const lines = text.split('\n');
+  // Only scan the first 15 lines — location is always in the header/contact area
+  for (const line of lines.slice(0, 15)) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+
+    // Match "City, Country" or "City, State" — second part must be a valid location keyword
+    const match = trimmed.match(/\b([A-Z][a-zA-Z\s.'-]{1,30}),\s*([A-Z][a-zA-Z\s]{1,30})\b/);
+    if (match) {
+      const city = match[1].trim();
+      const region = match[2].trim();
+      if (isValidLocationSegment(region) || INDIAN_CITIES.has(city.toLowerCase())) {
+        return `${city}, ${region}`;
+      }
+    }
+
+    // Match bare Indian city name (e.g. just "Pune" on its own line)
+    const bareCity = INDIAN_CITIES.get(trimmed.toLowerCase());
+    if (bareCity) return bareCity;
+  }
+
+  // Broader scan for explicit "City, India/USA/etc" patterns only
+  const locationRe = /\b([A-Z][a-zA-Z\s.'-]{1,25}),\s*(India|USA|United States|UK|Canada|Australia|Singapore|UAE)\b/i;
+  const globalMatch = text.match(locationRe);
+  if (globalMatch) return globalMatch[0];
+
+  return '';
 }
 
 function extractLocationOptions(text) {
   const seen = new Set();
   const options = [];
   const lines = String(text || '').split('\n').map((line) => line.trim()).filter(Boolean);
-  const locationPattern = /\b([A-Z][a-zA-Z.'’&\- ]{1,40}),\s*([A-Z]{2}|[A-Z][a-zA-Z.'’&\- ]{1,30}|United States|USA|India|UK|United Kingdom|Canada|Australia)\b/g;
 
-  for (const line of lines) {
+  for (const line of lines.slice(0, 20)) {
+    // Skip lines that look like tool/tech names or CI/CD references
+    if (/\b(jenkins|ci|cd|algorithms?|devops|agile|scrum|jira|github|gitlab|bitbucket|pipeline|deploy|build|server|database|framework|library|api|sdk|frontend|backend|aws|azure|gcp)\b/i.test(line)) {
+      continue;
+    }
+    // Skip lines that are clearly sentences (too many words)
+    if (line.split(/\s+/).length > 8) continue;
+
+    // Match "City, Region" with strict second-segment validation
+    const locationPattern = /\b([A-Z][a-zA-Z\s.'-]{1,25}),\s*([A-Z][a-zA-Z\s]{1,25})\b/g;
     const matches = [...line.matchAll(locationPattern)];
     for (const match of matches) {
-      const value = `${match[1].trim()}, ${match[2].trim()}`;
+      const city = match[1].trim();
+      const region = match[2].trim();
+      if (!isValidLocationSegment(region) && !INDIAN_CITIES.has(city.toLowerCase())) continue;
+
+      const value = `${city}, ${region}`;
       const key = value.toLowerCase();
       if (!seen.has(key)) {
         seen.add(key);
@@ -128,25 +206,29 @@ function extractLocationOptions(text) {
       }
     }
 
+    // Bare Indian city
+    const bareCityMatch = INDIAN_CITIES.get(line.toLowerCase());
+    if (bareCityMatch) {
+      const key = bareCityMatch.toLowerCase();
+      if (!seen.has(key)) { seen.add(key); options.push(bareCityMatch); }
+    }
+
     if (/\bremote\b/i.test(line)) {
       const value = 'Remote';
-      if (!seen.has(value.toLowerCase())) {
-        seen.add(value.toLowerCase());
-        options.push(value);
-      }
+      if (!seen.has(value.toLowerCase())) { seen.add(value.toLowerCase()); options.push(value); }
     }
   }
 
   return options;
 }
 
-// ─── LinkedIn extraction ──────────────────────────────────────────────────────
+// â”€â”€â”€ LinkedIn extraction â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function extractLinkedIn(text) {
   const match = text.match(/linkedin\.com\/in\/[a-zA-Z0-9\-_%]+/i);
   return match ? `https://${match[0]}` : '';
 }
 
-// ─── Skills extraction ────────────────────────────────────────────────────────
+// â”€â”€â”€ Skills extraction â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function extractSkills(text) {
   const found = [];
   for (const skill of SKILL_KEYWORDS) {
@@ -158,14 +240,14 @@ function extractSkills(text) {
   return found;
 }
 
-// ─── Experience extraction ────────────────────────────────────────────────────
+// â”€â”€â”€ Experience extraction â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function extractExperience(text) {
   // Look for explicit "X years of experience" patterns
   const explicit = text.match(/(\d+)\+?\s*years?\s*(of\s*)?(experience|exp)/i);
   if (explicit) return parseInt(explicit[1], 10);
 
-  // Fallback: count year ranges like "2018 – 2023" or "2019 - Present"
-  const yearRanges = [...text.matchAll(/\b(20\d{2}|19\d{2})\s*[-–—to]+\s*(20\d{2}|present)/gi)];
+  // Fallback: count year ranges like "2018 â€“ 2023" or "2019 - Present"
+  const yearRanges = [...text.matchAll(/\b(20\d{2}|19\d{2})\s*[-â€“â€”to]+\s*(20\d{2}|present)/gi)];
   if (yearRanges.length > 0) {
     const currentYear = new Date().getFullYear();
     let totalYears = 0;
@@ -181,7 +263,7 @@ function extractExperience(text) {
   return 0;
 }
 
-// ─── Current role / company extraction ───────────────────────────────────────
+// â”€â”€â”€ Current role / company extraction â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const ROLE_KEYWORDS = /\b(engineer|developer|designer|analyst|manager|architect|consultant|specialist|lead|director|officer|intern|scientist|devops|sre|qa|tester|product|scrum|agile)\b/i;
 
 function extractCurrentRole(lines) {
@@ -194,7 +276,7 @@ function extractCurrentRole(lines) {
   return '';
 }
 
-// ─── Notice period extraction ─────────────────────────────────────────────────
+// â”€â”€â”€ Notice period extraction â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function extractNoticePeriod(text) {
   if (/immediate|available\s*now|notice\s*:\s*0/i.test(text)) return 'Immediate';
   const m = text.match(/notice\s*(?:period)?\s*[:\-]?\s*(\d+)\s*(week|month)/i);
@@ -207,7 +289,7 @@ function extractNoticePeriod(text) {
   return '1 month'; // sensible default
 }
 
-// ─── Education extraction ─────────────────────────────────────────────────────
+// â”€â”€â”€ Education extraction â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const DEGREE_RE = /\b(b\.?s\.?|b\.?e\.?|b\.?tech|b\.?sc|m\.?s\.?|m\.?tech|m\.?sc|m\.?b\.?a|ph\.?d|bachelor|master|doctorate)\b/i;
 
 function extractEducation(lines) {
@@ -230,7 +312,7 @@ function extractEducation(lines) {
   return results.length > 0 ? results : [{ degree: '', institution: '', year: '' }];
 }
 
-// ─── Work history extraction ──────────────────────────────────────────────────
+// â”€â”€â”€ Work history extraction â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const DATE_RANGE_RE = /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|20\d{2}|19\d{2})\b.*?\b(20\d{2}|19\d{2}|present)\b/i;
 
 function extractWorkHistory(lines) {
@@ -238,7 +320,7 @@ function extractWorkHistory(lines) {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
     if (DATE_RANGE_RE.test(line)) {
-      const dateMatch = line.match(/((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)?\s*(?:20|19)\d{2})\s*[-–—to]+\s*((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)?\s*(?:20|19)\d{2}|present)/i);
+      const dateMatch = line.match(/((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)?\s*(?:20|19)\d{2})\s*[-â€“â€”to]+\s*((?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)?\s*(?:20|19)\d{2}|present)/i);
       const from = dateMatch ? dateMatch[1].trim() : '';
       const to   = dateMatch ? dateMatch[2].trim() : '';
 
@@ -262,10 +344,10 @@ function extractWorkHistory(lines) {
   }
   return entries.length > 0
     ? entries
-    : [{ company: '', role: '', from: '', to: 'Present', description: 'Extracted from resume — please verify.' }];
+    : [{ company: '', role: '', from: '', to: 'Present', description: 'Extracted from resume â€” please verify.' }];
 }
 
-// ─── Main export ──────────────────────────────────────────────────────────────
+// â”€â”€â”€ Main export â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 async function parseResumeLocally(file) {
   const isPdf  = file.type === 'application/pdf' || file.name.match(/\.pdf$/i);
   const isDocx = file.name.match(/\.(docx|doc)$/i);
@@ -283,7 +365,7 @@ async function parseResumeLocally(file) {
     lines   = [];
   }
 
-  // ── Extract fields ──────────────────────────────────────────────────────
+  // â”€â”€ Extract fields â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   const { firstName, lastName } = extractName(lines);
   const email        = extractEmail(rawText);
   const phone        = extractPhone(rawText);

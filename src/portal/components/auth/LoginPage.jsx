@@ -36,31 +36,45 @@ export function LoginPage({ onLogin }) {
 
     setLoading(true);
 
-    try {
-      const res = await fetch(`${API_BASE}/api/auth/login`, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ email: cleanEmail, password: cleanPw }),
-      });
+    const MAX_RETRIES = 3;
+    const RETRY_DELAY_MS = 1200;
 
-      const data = await res.json();
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/login`, {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ email: cleanEmail, password: cleanPw }),
+        });
 
-      if (!res.ok) {
-        setError(data.error || 'Invalid email or password.');
-        setLoading(false);
+        const data = await res.json();
+
+        if (!res.ok) {
+          // Auth failure (wrong password, expired session, etc.) — don't retry
+          setError(data.error || 'Invalid email or password.');
+          setLoading(false);
+          return;
+        }
+
+        // Store token + user profile in sessionStorage
+        sessionStorage.setItem('cp_token', data.token);
+        sessionStorage.setItem('cp_user',  JSON.stringify(data.user));
+
+        onLogin(data.user);
         return;
+
+      } catch {
+        // Network error (ECONNREFUSED / ECONNRESET) — server may still be starting
+        if (attempt < MAX_RETRIES) {
+          setError(`Connecting to server… (attempt ${attempt}/${MAX_RETRIES})`);
+          await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY_MS));
+        } else {
+          setError('Cannot reach the server. Please make sure the backend is running and try again.');
+        }
       }
-
-      // Store token + user profile in sessionStorage
-      sessionStorage.setItem('cp_token', data.token);
-      sessionStorage.setItem('cp_user',  JSON.stringify(data.user));
-
-      onLogin(data.user);
-    } catch {
-      setError('Cannot reach the server. Please try again.');
-    } finally {
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   return (

@@ -8,7 +8,10 @@
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
     "seed": "node src/scripts/seedUsers.js",
-    "seed:candidates": "node src/scripts/seedCandidatesFromWorkbook.js --replace"
+    "seed:candidates": "node src/scripts/seedCandidatesFromWorkbook.js --replace",
+    "seed:excel": "node src/scripts/seedFromExcel.js",
+    "seed:excel:replace": "node src/scripts/seedFromExcel.js --replace",
+    "seed:excel:dry": "node src/scripts/seedFromExcel.js --dry-run"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -22,5 +25,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.1",
     "multer": "^2.2.0"
+  },
+  "devDependencies": {
+    "xlsx": "^0.18.5"
   }
 }
