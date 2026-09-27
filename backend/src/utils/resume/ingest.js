@@ -3,7 +3,10 @@ import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { inflateRawSync } from 'node:zlib';
 import { TextDecoder } from 'node:util';
 
-const STANDARD_FONT_DATA_URL = new URL('../../../../node_modules/pdfjs-dist/standard_fonts/', import.meta.url).toString();
+const STANDARD_FONT_DATA_URL = new URL(
+  '../../standard_fonts/',
+  import.meta.resolve('pdfjs-dist/legacy/build/pdf.mjs'),
+).toString();
 
 function normalizeText(value) {
   return String(value || '')
